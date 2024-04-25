@@ -1,0 +1,6 @@
+﻿<prism:PrismApplication x:Class="WpfSvg.App"
+             xmlns:prism="http://prismlibrary.com/"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:WpfSvg">
+</prism:PrismApplication>
