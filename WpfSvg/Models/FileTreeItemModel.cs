@@ -16,20 +16,20 @@ namespace WpfSvg.Models {
         private string _path;
         private bool _selected;
         private readonly IEventAggregator _events;
-
-        public bool IsSelected { get { return _selected; } set { SetProperty(ref _selected, value, OnSelectedChanged); } }
-
-        public string Path {
-            get { return _path; }
-            set { _path = value; }
-        }
+        private bool _expanded;
 
         internal FileTreeItemModel(IEventAggregator events) {
             _events = events;
             DiscoverChildrenCommand = new DelegateCommand(DiscoverChildren);
         }
 
-        public TreeItemTypeEnum ItemType { get { return _type; } set { _type = value; } }
+        public bool IsSelected { get { return _selected; } set { SetProperty(ref _selected, value, OnSelectedChanged); } }
+
+        public bool IsExpanded { get { return _expanded; } set { SetProperty(ref _expanded, value, OnSelectedChanged); } }
+
+        public string Path { get { return _path; } set { SetProperty(ref _path, value); } }
+
+        public TreeItemTypeEnum ItemType { get { return _type; } set { SetProperty(ref _type, value); } }
 
         public bool ChildrenDiscovered { get { return _childrenDiscovered; } set { SetProperty(ref _childrenDiscovered, value); } }
 
@@ -41,7 +41,7 @@ namespace WpfSvg.Models {
 
         public FileTreeItemModel Parent { get { return _parent; } set { SetProperty(ref _parent, value); } }
 
-        private void DiscoverChildren() {
+        internal void DiscoverChildren() {
             if (ChildrenDiscovered) { return; }
             if (ItemType == TreeItemTypeEnum.File) { return; }
             var dirInfo = new DirectoryInfo(Path);

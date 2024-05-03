@@ -8,12 +8,12 @@ using System.Windows;
 // Attribute gesteuert. Ändern Sie diese Attributwerte, um die Informationen zu ändern,
 // die einer Assembly zugeordnet sind.
 [assembly: AssemblyTitle("WpfSvg")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Tool for converting SVG into XAML <DrawingImage> or multi-res ico")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("..")]
+[assembly: AssemblyCompany("Schlee, Kevin")]
 [assembly: AssemblyProduct("WpfSvg")]
-[assembly: AssemblyCopyright("Copyright © .. 2024")]
-[assembly: AssemblyTrademark("")]
+[assembly: AssemblyCopyright("")]
+[assembly: AssemblyTrademark("Schlee, Kevin")]
 [assembly: AssemblyCulture("")]
 
 // Durch Festlegen von ComVisible auf FALSE werden die Typen in dieser Assembly
@@ -51,5 +51,5 @@ using System.Windows;
 // Sie können alle Werte angeben oder Standardwerte für die Build- und Revisionsnummern verwenden,
 // indem Sie "*" wie unten gezeigt eingeben:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyVersion("1.1.0.0")]
+[assembly: AssemblyFileVersion("1.1.0.0")]

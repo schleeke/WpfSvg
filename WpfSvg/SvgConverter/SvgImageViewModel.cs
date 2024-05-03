@@ -2,6 +2,8 @@
 using Prism.Events;
 using Prism.Mvvm;
 using System;
+using System.Diagnostics;
+using System.IO;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -18,6 +20,7 @@ namespace WpfSvg.ViewModels {
             Filepath = filepath;
             _events = events;
             CopyXamlToClipboardCommand = new DelegateCommand(CopyXaml);
+            CreateIconCommand = new DelegateCommand(CreateIcon);
         }
 
         internal SvgImageViewModel(ConvertedSvgData data, IEventAggregator events) {
@@ -66,6 +69,7 @@ namespace WpfSvg.ViewModels {
             }
         }
         public ICommand CopyXamlToClipboardCommand { get; }
+        public ICommand CreateIconCommand { get; }
 
 
 
@@ -80,6 +84,47 @@ namespace WpfSvg.ViewModels {
             _events?.GetEvent<Events.CurrentStatusChangedEvent>().Publish("Copied to clipboard...");
         }
 
+        private void CreateIcon() {
+            var locations = ExecuteAndGetOutput("where", "convert.exe").Split(Environment.NewLine.ToCharArray());
+            var cmd = "";
+            foreach (var item in locations) {
+                if (string.IsNullOrEmpty(item)) { continue; }
+                if (!item.ToLower().Contains("imagemagick")) { continue; }
+                cmd = item;
+                break; }
+            if (string.IsNullOrEmpty(cmd)) { return; }
+            var svgFile = new FileInfo(Filepath);
+            var baseName = svgFile.Name.Substring(0, svgFile.Name.Length - svgFile.Extension.Length);
+            var icoFile = Path.Combine(svgFile.Directory.FullName, $"{baseName}.ico");
+            var args = $"-density 300 -define icon:auto-resize=256,128,96,64,48,32,16 -background none \"{svgFile.FullName}\" \"{icoFile}\"";
+            Execute(cmd, args);
+        }
+
+
+        private void Execute(string command, string arguments) {
+            var psi = new ProcessStartInfo {
+                Arguments = arguments,
+                CreateNoWindow = true,
+                FileName = command,
+            };
+            var proc = Process.Start(psi);
+            proc.WaitForExit();
+        }
+
+
+        private string ExecuteAndGetOutput(string command, string arguments) {
+            var psi = new ProcessStartInfo {
+                Arguments = arguments,
+                CreateNoWindow = true,
+                FileName = command,
+                UseShellExecute = false,
+                RedirectStandardOutput = true
+            };
+            var proc = Process.Start(psi);
+            proc.WaitForExit();
+            var result = proc.StandardOutput.ReadToEnd();
+            return result;
+        }
     }
 
 }

@@ -113,7 +113,7 @@
                 </ComboBox>
             </ToolBar>
         </ToolBarTray>
-        <TreeView ItemsSource="{Binding Path=FileSystem, UpdateSourceTrigger=PropertyChanged}">
+        <TreeView x:Name="DirectoryTree" ItemsSource="{Binding Path=FileSystem, UpdateSourceTrigger=PropertyChanged}">
             <TreeView.ItemTemplate>
                 <HierarchicalDataTemplate DataType="models:FileTreeItemModel" ItemsSource="{Binding Path=Children, UpdateSourceTrigger=PropertyChanged}">
                     <Grid>
@@ -173,6 +173,7 @@
             <TreeView.ItemContainerStyle>
                 <Style TargetType="{x:Type TreeViewItem}">
                     <Setter Property="IsSelected" Value="{Binding IsSelected}" />
+                    <Setter Property="IsExpanded" Value="{Binding IsExpanded}" />
                 </Style>
             </TreeView.ItemContainerStyle>
         </TreeView>

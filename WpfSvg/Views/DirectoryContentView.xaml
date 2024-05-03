@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:local="clr-namespace:WpfSvg.Views"
              xmlns:prism="http://prismlibrary.com/"
              xmlns:viewmodels="clr-namespace:WpfSvg.ViewModels"
@@ -26,15 +27,7 @@
         <ListBox.ItemTemplate>
             <DataTemplate DataType="{x:Type viewmodels:SvgImageViewModel}">
                 <Border x:Name="GraphicBorder" BorderThickness="1" BorderBrush="MediumBlue">
-                    <!--don't set, use automatic: Width="{Binding Path='ActualWidth', ElementName='Bd'}" Height="{Binding Path='ActualHeight', ElementName='Bd'}"-->
                     <Grid  ToolTip="{Binding Filename}">
-                        <!--<Button Style="{StaticResource FlatButton}">
-                                <Image Source="{Binding PreviewSource}"></Image>
-                                <Button.InputBindings>
-                                    <MouseBinding Gesture="LeftDoubleClick" Command="{Binding OpenDetailCommand}" />
-                                </Button.InputBindings>
-                            </Button>-->
-
                         <Image Source="{Binding PreviewSource}" VerticalAlignment="Center" HorizontalAlignment="Center" Width="64" Height="64" ToolTip="Double click to copy XAML...">
                             <Image.InputBindings>
                                 <MouseBinding Gesture="LeftDoubleClick" Command="{Binding CopyXamlToClipboardCommand}" />
@@ -42,11 +35,44 @@
                         </Image>
                         <Grid.ContextMenu>
                             <ContextMenu>
-                                <ContextMenu.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <StackPanel Background="{x:Static SystemColors.MenuBarBrush}"/>
-                                    </ItemsPanelTemplate>
-                                </ContextMenu.ItemsPanel>
+                                <MenuItem Header="Create icon..."
+                                          Command="{Binding Path=CreateIconCommand, UpdateSourceTrigger=PropertyChanged}"
+                                          ToolTip="Uses Image Magick to create a multi-res icon...">
+                                    <MenuItem.Icon>
+                                        <Image Width="16" Height="16">
+                                            <Image.Source>
+                                                <DrawingImage>
+                                                    <DrawingImage.Drawing>
+                                                        <DrawingGroup ClipGeometry="M0,0 V48 H48 V0 H0 Z">
+                                                            <DrawingGroup Transform="1.5,0,0,1.5,0,0">
+                                                                <GeometryDrawing Brush="#FF000000" Geometry="F1 M48,48z M0,0z M10,5.8C11.988,5.8 13.6,7.412 13.6,9.4 13.6,11.388 11.988,13 10,13 8.012,13 6.4,11.388 6.4,9.4 6.4,7.412 8.012,5.8 10,5.8z M2,2L2,27.84 10.2,18 13.4,21 6.3565,30 7.063,30 20.8,12.2 30,27.5892 30,2z M0,0L32,0 32,32 0,32z" />
+                                                            </DrawingGroup>
+                                                        </DrawingGroup>
+                                                    </DrawingImage.Drawing>
+                                                </DrawingImage>
+                                            </Image.Source>
+                                        </Image>
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem Header="Copy to clipboard..."
+                                          Command="{Binding Path=CopyXamlToClipboardCommand, UpdateSourceTrigger=PropertyChanged}"
+                                          ToolTip="Copies the DrawingImage XAML node to clipboard...">
+                                    <MenuItem.Icon>
+                                        <Image Width="16" Height="16">
+                                            <Image.Source>
+                                                <DrawingImage>
+                                                    <DrawingImage.Drawing>
+                                                        <DrawingGroup ClipGeometry="M0,0 V48 H48 V0 H0 Z">
+                                                            <DrawingGroup Transform="1.5,0,0,1.5,1.662,0">
+                                                                <GeometryDrawing Brush="#FF000000" Geometry="F1 M48,48z M0,0z M23.83,12.61L29.784,18.598 23.839,24.577 22.421,23.167 25.57,20 16,20 16,18 26.3694,18 22.412,14.02z M12.416,1.914C11.419,1.914,10.607,2.697,10.607,3.659L10.607,4.616 6.867,4.616 6.867,8.086 17.966,8.086 17.966,4.616 14.224,4.616 14.224,3.659C14.224,2.697,13.413,1.914,12.416,1.914z M12.416,0C14.172,0,15.653,1.147,16.093,2.702L19.966,2.702 19.966,4 25,4 25,10 23,10 23,6 19.966,6 19.966,10 4.867,10 4.867,6 2,6 2,30 23,30 23,27 25,27 25,32 0,32 0,4 4.867,4 4.867,2.702 8.739,2.702C9.179,1.147,10.66,0,12.416,0z" />
+                                                            </DrawingGroup>
+                                                        </DrawingGroup>
+                                                    </DrawingImage.Drawing>
+                                                </DrawingImage>
+                                            </Image.Source>
+                                        </Image>
+                                    </MenuItem.Icon>
+                                </MenuItem>
                             </ContextMenu>
                         </Grid.ContextMenu>
                     </Grid>
