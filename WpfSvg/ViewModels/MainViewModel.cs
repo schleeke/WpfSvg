@@ -8,7 +8,7 @@ using System.Windows.Input;
 
 namespace WpfSvg.ViewModels {
     internal class MainViewModel : BindableBase {
-        private string _title = "Transform SVG -> XAML";
+        private string _title = "WpfSvg v1.1";
         private readonly IEventAggregator _events;
         private string _currentStatus = "Ready.";
         private readonly IRegionManager _regions;
